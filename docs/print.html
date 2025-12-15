@@ -1,0 +1,902 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Everything You Wanted to Ask About Rust</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Everything You Wanted to Ask About Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="advanced-hands-on-rust"><a class="header" href="#advanced-hands-on-rust">Advanced Hands-on Rust</a></h1>
+<p><img src="./hwmrust.jpg" alt="" /></p>
+<p><a href="https://pragprog.com/titles/hwmrust/advanced-hands-on-rust/">From PragProg (EBook)</a></p>
+<p><a href="https://www.amazon.com/Advanced-Hands-Rust-Coding-Skills/dp/B0DHC6F1X2">From Amazon</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-do-you-see-as-the-biggest-mindset-shift-developers-need-to-make-when-coming-to-rust-from-c-java-or-c"><a class="header" href="#what-do-you-see-as-the-biggest-mindset-shift-developers-need-to-make-when-coming-to-rust-from-c-java-or-c">What do you see as the biggest mindset shift developers need to make when coming to Rust from C++, Java, or C#?</a></h1>
+<p>In <strong>Java</strong> and <strong>C#</strong> you run <code>MyThing o = new MyThing()</code> and an instance of <code>MyThing</code> appears on the heap. It'll be deleted when the garbage collector notices that it is no longer reachable.</p>
+<p>Both let you make the destruction explicit:</p>
+<pre><code class="language-java">try (MyThing thing = new MyThing()) {
+    // Do my thing
+} catch (ThingException ex) {
+    // Handle the errors
+} // Thing is destroyed
+</code></pre>
+<pre><code class="language-c#">using (MyThing thing = new MyThing()) {
+
+} // Thing is destroyed
+</code></pre>
+<blockquote>
+<p>This pattern is called RAII - Resource Acquisition is Initialization. You can tell that C++ invented the name, because it's a vital concept - and not very descriptive!</p>
+</blockquote>
+<p>In <strong>C</strong>, <strong>C++</strong> and <strong>Rust</strong> you have a <em>stack</em> and a <em>heap</em>. The stack is fast, small and local - the heap is where you put big things!</p>
+<p>In C++ (and C#!) you can define a destructor. Let's use this to illustrate stack cleanup; your C++ object is automatically cleaned up the moment it goes out of scope (absolutely deterministic):</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+struct MyClass {
+    MyClass() {}
+    ~MyClass() {
+        std::cout &lt;&lt; "Being Destroyed\n";
+    }
+};
+
+int main() {
+    auto c = MyClass();
+    return 0;
+}
+</code></pre>
+<p>This will always print:</p>
+<pre><code>Being destroyed
+</code></pre>
+<p>Rust looks suspiciously similar - you'd almost think that Rust was designed by C++ users looking to fix the common issues!</p>
+<pre><pre class="playground"><code class="language-rust edition2024">struct MyClass {}
+
+impl Drop for MyClass {
+    fn drop(&amp;mut self) {
+        println!("Being Destroyed");
+    }
+}
+
+fn main() {
+    let c = MyClass{};
+}</code></pre></pre>
+<p>This also prints:</p>
+<pre><code>Being destroyed
+</code></pre>
+<h2 id="pointers-and-the-heap"><a class="header" href="#pointers-and-the-heap">Pointers and the Heap</a></h2>
+<p>C, C++ and Rust don't automatically put anything on the heap for you --- they even work on platforms that <em>don't have one</em>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="no-runtime"><a class="header" href="#no-runtime">No Runtime!</a></h1>
+<p>Rust compiles down to the same machine code as C and C++ - there is no need to have a runtime.</p>
+<p>So you don't have to ship a JVM/.NET Runtime.</p>
+<p>Unlike C++, Rust statically compiles its Rust-crate libraries - so the entire Rust standard library is included in your binary by default. You can opt out of that (with <code>no_std</code>), but generally Rust ships with everything it needs to run. It will still usually rely on platform libraries such as libc/glibc, unless you are targeting a platform such as MUSL (that is entirely statically linked).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="stack-vs-heap"><a class="header" href="#stack-vs-heap">Stack vs Heap</a></h1>
+<p>This mostly affects coming from Java/C#.</p>
+<p>Java and C# let you view memory as this big, amorphous blob. The runtime does garbage collection, and cleans up after you. It's hard to make memory errors (but sometimes possible), because the runtime will try and keep objects alive until nothing refers to them.</p>
+<p>Both languages (outside of FFI/unsafe) typically view memory as one big heap. In <strong>Java</strong> and <strong>C#</strong> you run <code>MyThing o = new MyThing()</code> and an instance of <code>MyThing</code> appears on the heap. It'll be deleted when the garbage collector notices that it is no longer reachable.</p>
+<p>Both let you make the destruction explicit:</p>
+<pre><code class="language-java">try (MyThing thing = new MyThing()) {
+    // Do my thing
+} catch (ThingException ex) {
+    // Handle the errors
+} // Thing is destroyed
+</code></pre>
+<pre><code class="language-c#">using (MyThing thing = new MyThing()) {
+
+} // Thing is destroyed
+</code></pre>
+<p>In <strong>C</strong>, <strong>C++</strong>, and Rust most things are on the <em>stack</em> unless you say otherwise. The stack is tiny (8 Mb by default on Linux) - but you can write simple programs without ever touching memory management:</p>
+<pre><code class="language-cpp">struct MyThing{};
+
+int main() {
+    MyThing c = MyThing{};
+    return 0;
+} // Thing is guaranteed to be destroyed *right now*
+</code></pre>
+<pre><pre class="playground"><code class="language-rust edition2024">struct MyThing{}
+
+fn main() {
+    let c = MyThing{};
+} // Thing is guaranteed to be destroyed *right now*</code></pre></pre>
+<p>So from a C++ point-of-view, you have:</p>
+<ul>
+<li><code>Box</code> in Rust (which is basically C++'s <code>unique_ptr</code>).</li>
+<li><code>Rc</code> in Rust (which is basically C++'s <code>shared_ptr</code> in single-threaded mode)</li>
+<li><code>Arc</code> in Rust (which is basically C++'s <code>shared_ptr</code> in multi-threaded mode)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-heap"><a class="header" href="#the-heap">The Heap</a></h1>
+<p>In <strong>C</strong>, you learn to love <code>malloc</code> and <code>free</code> for putting things on the heap:</p>
+<pre><code class="language-c">struct MyThing{};
+
+
+int main() {
+    MyThing * c = malloc(sizeof(MyThing));
+    free(c); // Thing won't be removed from the heap if you forget!
+
+    return 0;
+}
+</code></pre>
+<p>In <strong>Older C++</strong>, you have <code>new</code> and <code>delete</code>:</p>
+<pre><code class="language-cpp">struct MyThing{};
+
+
+int main() {
+    auto c = new MyThing{};
+    delete c; // Thing won't be removed from the heap if you forget!
+
+    return 0;
+}
+</code></pre>
+<p>In <strong>Modern C++</strong>, you can use a <em>smart pointer</em>:</p>
+<pre><code class="language-cpp">#include &lt;memory&gt;
+
+struct MyThing {};
+
+int main() {
+    auto c = std::make_unique&lt;MyThing&gt;();
+} // c will self-delete when it goes out of scope
+</code></pre>
+<p>You <em>can</em> use <code>alloc()</code> (and even <code>malloc()</code> if you want to) with unsafe Rust, but most of the time you'll use the built-in smart pointers:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">struct MyThing {};
+
+fn main() {
+    let c = Box::new(MyThing{});
+}</code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="oopsies"><a class="header" href="#oopsies">Oopsies</a></h1>
+<p>Rust takes a lot of care to avoid common pitfalls.</p>
+<p>This will compile and run in C++:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+struct MyThing{
+    int i;
+};
+
+int main() {
+    auto c = new MyThing();
+    c-&gt;i = 3;
+    delete c;
+    std::cout &lt;&lt; c-&gt;i &lt;&lt; "\n";
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>This might print 3. It usually will. It might also unleash nasal demons - the C++ standard says so!</p>
+</blockquote>
+<p>Equivalent Rust won't compile:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">struct MyThing { i: i32 }
+
+fn main() {
+    let c = Box::new(MyThing { i: 32 });
+    drop(c);
+    println!("{}", c.i);
+}</code></pre></pre>
+<p>This will compile and run in C++:</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+int main() {
+    std::vector&lt;int&gt; numbers = {1, 2, 3, 4};
+    for (int i=0; i&lt;6; i++) {
+        std::cout &lt;&lt; numbers[i] &lt;&lt; "\n";
+    }
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>In the playground, I got "1, 2, 3, 4, 0, 6897". It's anybody's guess what you'll get. It might be state secrets!</p>
+</blockquote>
+<p>In Rust:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
+    let numbers = vec![1, 2, 3, 4];
+    for i in 0..6 {
+        println!("{}", numbers[i]);
+    }
+}</code></pre></pre>
+<p>Instead of revealing state secrets, Rust "panics" (crashes) - just like the managed languages:</p>
+<pre><code>thread 'main' (14) panicked at src/main.rs:4:31:
+index out of bounds: the len is 4 but the index is 4
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+<p>That's a <em>good</em> thing. You don't want to read into invalid memory and see what's there!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lets-get-racy"><a class="header" href="#lets-get-racy">Let's Get Racy</a></h1>
+<p>Rust makes data races <em>not compile</em>.</p>
+<p>For example:</p>
+<pre><code class="language-cpp">#include &lt;thread&gt;
+#include &lt;vector&gt;
+#include &lt;atomic&gt;
+#include &lt;iostream&gt;
+
+int main() {
+  int counter = 0;
+  std::vector&lt;std::thread&gt; handles;
+    
+  for (int i=0; i&lt;3; i++) {
+    handles.push_back(
+      std::thread([&amp;counter]() { 
+        for (int i=0; i&lt;100000; i++) {
+          counter++;
+        }
+      })
+    );
+  }
+
+  for (int i=0; i&lt;handles.size(); i++) {
+    handles[i].join();
+  }
+
+  std::cout &lt;&lt; "Counter: " &lt;&lt; counter &lt;&lt; "\n";
+  return 0;
+}
+</code></pre>
+<p>This gives you a <em>different answer every time</em> - there's a race condition with multiple threads updating <code>counter</code> all at once.</p>
+<p>Rust won't even let you compile this:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
+    let mut counter = 0;
+    let mut handles = Vec::new();
+    for _ in 0..3 {
+        handles.push(std::thread::spawn(|| {
+            for _ in 0..100_000 {
+                counter += 1;
+            }
+        }))
+    }
+    for handle in handles {
+      handle.join();
+    }
+}</code></pre></pre>
+<p>It will fail to compile. The actual compilation error is comically large:</p>
+<pre><code>   Compiling playground v0.0.1 (/playground)
+error[E0373]: closure may outlive the current function, but it borrows `counter`, which is owned by the current function
+ --&gt; src/main.rs:5:41
+  |
+5 |         handles.push(std::thread::spawn(|| {
+  |                                         ^^ may outlive borrowed value `counter`
+6 |             for _ in 0..100_000 {
+7 |                 counter += 1;
+  |                 ------- `counter` is borrowed here
+  |
+note: function requires argument type to outlive `'static`
+ --&gt; src/main.rs:5:22
+  |
+5 |           handles.push(std::thread::spawn(|| {
+  |  ______________________^
+6 | |             for _ in 0..100_000 {
+7 | |                 counter += 1;
+8 | |             }
+9 | |         }))
+  | |__________^
+help: to force the closure to take ownership of `counter` (and any other referenced variables), use the `move` keyword
+  |
+5 |         handles.push(std::thread::spawn(move || {
+  |                                         ++++
+
+error[E0499]: cannot borrow `counter` as mutable more than once at a time
+   --&gt; src/main.rs:5:41
+    |
+  5 |           handles.push(std::thread::spawn(|| {
+    |                        -                  ^^ `counter` was mutably borrowed here in the previous iteration of the loop
+    |  ______________________|
+    | |
+  6 | |             for _ in 0..100_000 {
+  7 | |                 counter += 1;
+    | |                 ------- borrows occur due to use of `counter` in closure
+  8 | |             }
+  9 | |         }))
+    | |__________- argument requires that `counter` is borrowed for `'static`
+    |
+note: requirement that the value outlives `'static` introduced here
+   --&gt; /playground/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/thread/mod.rs:728:15
+    |
+728 |     F: Send + 'static,
+    |               ^^^^^^^
+
+Some errors have detailed explanations: E0373, E0499.
+For more information about an error, try `rustc --explain E0373`.
+error: could not compile `playground` (bin "playground") due to 2 previous errors
+</code></pre>
+<p>Rust <em>really</em> doesn't want you to make this mistake! (You can solve this particular problem with an <code>AtomicUsize</code>, or use a proper <code>Mutex</code>)</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="performance"><a class="header" href="#performance">Performance</a></h1>
+<p>When compared with Java and C#: your Rust program will use a lot less memory. It will often run faster, but the JVM in particular is amazing at Just In Time optimization and sometimes beats C in runtime performance!</p>
+<p>When compared with C and C++: your binaries will be bigger (they are statically linked by default), runtime performance for both speed and memory usage will be about the same.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="is-rusts-steep-learning-curve-still-a-problem-in-2025-or-has-the-ecosystem-matured-enough-to-ease-newcomers-in"><a class="header" href="#is-rusts-steep-learning-curve-still-a-problem-in-2025-or-has-the-ecosystem-matured-enough-to-ease-newcomers-in">Is Rust’s steep learning curve still a problem in 2025, or has the ecosystem matured enough to ease newcomers in?</a></h1>
+<p>Pre-1.0, Rust looked <em>terrifying</em>:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
+    // Owned box (heap allocation), the '~' symbol has been removed in modern Rust
+    let mut x: ~int = ~10; // 'mut' was also a property of the field/binding
+
+    // Reference counted pointer, '@' has also been removed for ownership semantics
+    let y: @int = @20;
+
+    // A pure function declaration (pure was a keyword)
+    pure fn add(a: int, b: int) -&gt; int {
+        ret a + b; // 'ret' was used instead of 'return'
+    }
+
+    log(fmt!("%d + %d = %d", *x, *y, add(*x, *y)));
+
+    // Lifetimes were indicated with a '\' instead of '\''
+    // e.g., fn get_str(s: \&amp;str) -&gt; \&amp;str { s }
+}</code></pre></pre>
+<p>And we talked about memory a lot. So you might fear running into code like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn allocate_memory_with_rust() {
+    use std::alloc::{alloc, dealloc, Layout};
+
+    unsafe {
+        // Allocate memory with Rust. It's safer to force alignment.
+        let layout = Layout::new::&lt;u16&gt;();
+        let ptr = alloc(layout);
+
+        // Set the allocated variable - dereference the pointer and set to 42
+        *ptr = 42;
+        assert_eq!(42, *ptr);
+
+        // Free the memory - this is not automatic
+        dealloc(ptr, layout);
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Here's the good news: unless you're writing really deep library code (which you won't be, if you just started!) - Rust looks more like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">use axum::{routing::get, Router};
+
+#[tokio::main]
+async fn main() {
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:3001").await.unwrap();
+
+    let app = Router::new()
+        .route("/", get(say_hello));
+
+    axum::serve(listener, app).await.unwrap();
+}
+
+async fn say_hello() -&gt; &amp;'static str {
+    "Hello, World!"
+}</code></pre></pre>
+<p>That's a complete, working webserver. It looks a lot like <em>Express</em> and other webservers. Rust scales with you. It's really easy to get started making something useful.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="will-rust-gain-widespread-adoption-in-2026"><a class="header" href="#will-rust-gain-widespread-adoption-in-2026">Will Rust gain widespread adoption in 2026?</a></h1>
+<h1 id="yes"><a class="header" href="#yes">YES!</a></h1>
+<p>(Is that short enough?)</p>
+<p>Linux just ended the Rust experiment: by making it no longer an experiment. Rust is in Linux, forever.</p>
+<p>I'm training more and more companies from different fields who want:</p>
+<ul>
+<li>Safety</li>
+<li>Deterministic Performance</li>
+<li>C-Like Performance without the Headache</li>
+</ul>
+<p>I've been seeing companies in defense, aerospace, automotive, and finance all adopting Rust.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="whats-ownership-and-borrowing-why-do-we-need-these-things-in-rust-whats-the-best-way-to-really-get-them"><a class="header" href="#whats-ownership-and-borrowing-why-do-we-need-these-things-in-rust-whats-the-best-way-to-really-get-them">What’s ownership and borrowing? Why do we need these things in Rust? What’s the best way to really “get” them?</a></h1>
+<p>If you've been writing C and C++, you already know about the concepts on some level.</p>
+<p><em>Ownership</em> is "who owns this object, and who is responsible for destroying it". In C &amp; C++, you have to understand this or terrible things happen. Rust makes the concept explicit.</p>
+<p>So in C++, you create a <code>unique_ptr&lt;MyThing&gt;</code> - and when it falls out of scope, it's destroyed. Rust is <em>exactly</em> the same.</p>
+<p>C++ has the scary <code>std::move</code> (it's actually a cast!) for conceptually <em>moving</em> ownership of a variable - it now <em>belongs</em> to the recipient. Rust is <em>move by default</em> - you can't accidentally use the thing you just moved. But the principle is the same: <em>someone owns the thing</em>.</p>
+<p>It's like a car. If I give you the keys and the title, it's now <em>yours</em> (you can of course give it back).</p>
+<p>On the other hand, in C++ you "take a reference" to things all the time:</p>
+<pre><code class="language-cpp">struct MyThing {};
+
+void do_something(MyThing &amp; thing) {
+    // Code
+}
+
+int main() {
+    auto thing = MyThing();
+    do_something(thing);
+    return 0;
+}
+</code></pre>
+<p><code>do_something</code> is working on the original <em>thing</em> - the reference is just a pointer with more strict rules about <em>null</em>.</p>
+<p>Rust is the same thing, just more explicit:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">struct MyThing {}
+
+fn do_something(thing: &amp;MyThing) {
+    // Code
+}
+
+fn main() {
+    let thing = MyThing{};
+    do_something(&amp;thing);
+}</code></pre></pre>
+<p>So borrowing is letting someone have the keys to your car, but it's still your car - and you get it back when they are done. Rust won't let them change your car unless you specifically give them mutability.</p>
+<p>Rust <em>also</em> won't let you share a car that no longer exists, or let 5 people try and steer the same car at once. That's <em>why</em> the borrow checker and ownership exist. It stops you from accidentally hurting yourself. It also won't let you have a car that you also pretend is a bicycle (aliasing).</p>
+<blockquote>
+<p>The golden rule: you can borrow something immutably as much as you want - read only. (Exclusive) Or - you can borrow something mutably (read-write) exactly once at a time. Anything else can lead to danger!</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-does-rust-mean-by-zero-cost-abstractions"><a class="header" href="#what-does-rust-mean-by-zero-cost-abstractions">What does Rust mean by “zero-cost abstractions”?</a></h1>
+<p>Much the same as C++:</p>
+<ul>
+<li>You only pay for what you <em>use</em>,</li>
+<li>The compiler will optimize away much of the additional decoration.</li>
+</ul>
+<p>It lets you have nice things without making your program run really slowly.</p>
+<p>Zero-cost also applies at multiple levels. At the high-level, it means you won't "pay extra" performance cost for the compact:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    let even_sum: i32 = numbers
+        .iter()
+        .filter(|&amp;num| num % 2 == 0) // Filter for even numbers
+        .sum();                     // Sum the results
+    println!("Sum of even numbers: {}", even_sum);
+}</code></pre></pre>
+<p>As opposed to the loop-based:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    let mut even_sum = 0;
+    for i in 0..numbers.len() {
+        let num = numbers[i];
+        if num % 2 == 0 {
+            even_sum += num;
+        }
+    }
+    println!("Sum of even numbers: {}", even_sum);
+}</code></pre></pre>
+<p>It can <em>also</em> mean:</p>
+<ul>
+<li>"Zero-Sized Types" (markers) don't even exist in the compiled code. So you can use them for clear code, and not have to pay.</li>
+<li>Traits are "monomorphized" - compiled to a single code path per type used (concrete implementations). So unless you add the <code>dyn</code> keyword, you aren't having dynamic/run-time dispatch added to your program.</li>
+<li><code>Result</code> and <code>Option</code> are simple compare/branches in compiled code - no hidden cost for exception handling.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="do-i-need-to-use-iterators-whenever-possible-or-is-writing-a-loop-just-as-fine"><a class="header" href="#do-i-need-to-use-iterators-whenever-possible-or-is-writing-a-loop-just-as-fine">Do I need to use iterators whenever possible, or is writing a loop just as fine?</a></h1>
+<p>You'll find that experienced Rust developers tend to use iterators. But there's <em>nothing</em> wrong with using loops (iterators are sometimes a touch faster). Sometimes, you even want to keep using loop to avoid the "my iterator function can't return" trap!</p>
+<p>With <em>Rayon</em>, you suddenly can replace <code>iter()</code> with <code>par_iter()</code> and magically speed up a lot of operations. That's a good reason to learn the iterator approach.</p>
+<p>I've been writing Rust for a decade, and I still sometimes write a loop first and then turn it into an iterator when I think someone might peek at my code!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-quickly-should-i-master-writing-async-code-if-i-want-to-develop-real-projects"><a class="header" href="#how-quickly-should-i-master-writing-async-code-if-i-want-to-develop-real-projects">How quickly should I master writing async code if I want to develop real projects?</a></h1>
+<p>It's definitely worth learning synchronous Rust first.</p>
+<p>Async Rust is a really powerful beast, but it can also get confusing when you step beyond well-defined webservers (and similar). The compiler actually converts all your async code into state machines (often with self-reference), which makes the borrow checker actually troublesome: you need to become friendly with <code>Arc</code>, and possibly pinning when you get into advanced async code.</p>
+<blockquote>
+<p>I'm actually teaching this as an all-day workshop at Rust Nation in London, in February.</p>
+</blockquote>
+<p>It kind-of depends upon what you're doing. You can do a <em>lot</em> without ever touching async code. You can do a lot with async code that lets the libraries do the hard bit (webservers). It's when you start to need to create async stream adapters and similar that it gets tough.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="why-are-there-no-throwing-and-catching-exceptions-in-rust"><a class="header" href="#why-are-there-no-throwing-and-catching-exceptions-in-rust">Why are there no throwing and catching exceptions in Rust?</a></h1>
+<p>Let's look at a timeline:</p>
+<ul>
+<li><strong>C</strong> - let's return an error integer. FAST, but not very clear. It's also really easy to forget to check the result code.</li>
+<li><strong>C++</strong> - let's throw exceptions that can stop the program, include stack-traces and messages. Great as long as you keep them <em>exceptional</em>, and quite large on some platforms. It's also easy to forget an exception thrower. <code>-f noexcept</code> becomes common in a lot of places.</li>
+<li><strong>Java</strong> - let's throw exceptions and make checking them mandatory. Awesome, but now lots of programs have <code>try { .. } catch (Exception ex) { .. }</code> at the top because nobody wants to do that. Ada exists.</li>
+</ul>
+<p>So Rust wanted a bit of everything.</p>
+<p><code>Result&lt;T, Error&gt;</code> forces you to at least acknowledge that an error might occur. You can still <code>unwrap</code>, but you are at least saying that either:</p>
+<p>a) This won't happen. (Programmer assertion)
+b) If this does happen, it's so bad I just want to stop (runtime assertion).</p>
+<p>Or you can:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>match result {
+    Ok(value) =&gt; // Do the good path
+    Err(e) =&gt; // Handle the error
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="and-the-dirty-secret"><a class="header" href="#and-the-dirty-secret">And The Dirty Secret</a></h2>
+<p>Ever noticed that if you <code>panic!</code>, you get a stack trace? This uses the platform's stack unwinder, just like exceptions do. You can make your Rust program really small by replacing the default panic handler - and removing all that (if you need to).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="why-does-rust-have-both-result-and-option-types--how-do-i-know-which-one-to-use"><a class="header" href="#why-does-rust-have-both-result-and-option-types--how-do-i-know-which-one-to-use">Why does Rust have both Result and Option types – how do I know which one to use?</a></h1>
+<p>Great question!</p>
+<p>An <em>Option</em> represents cases where the absence of a value is still a valid response. It's similar to <code>null</code> in many languages (but you don't get to ignore it or de-reference a null and ruin your afternoon).</p>
+<p>For example:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn get_user(user_id: UserId) -&gt; Option&lt;User&gt; {
+    if user_exists {
+        Some(user)
+    } else {
+        None
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>The non-existence of a user with that ID isn't really an error (depending upon your logic). It's an absence of data.</p>
+<p>Whereas this is an error:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn load_user_from_database(user_id: UserId) -&gt; Result&lt;User, DbError&gt; {
+    return Err(DbError::DatabaseServerOnFire)
+}
+<span class="boring">}</span></code></pre></pre>
+<p>An error - a result - tells you if the operation <em>succeeded</em>, and <em>if not, why not</em>. Requesting a record from a database, but the connection fails? That's an error. Requesting a record from a database, but it doesn't exist? That's usually an <code>Option</code>.</p>
+<p>As a result, it's not at all uncommon to express this as:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn get_user(user: UserId) -&gt; Result&lt;Option&lt;User&gt;, DbError&gt; { .. }
+<span class="boring">}</span></code></pre></pre>
+<p>It's all about making intent really explicit, and making sure that you are handling different cases appropriately.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="which-external-crate-should-i-learn-about-first"><a class="header" href="#which-external-crate-should-i-learn-about-first">Which external crate should I learn about first?</a></h1>
+<p>I personally like to start by introducing <code>colored</code> when I'm teaching, just because I like it:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>println!("{}", "Oh No!".red());
+<span class="boring">}</span></code></pre></pre>
+<p>In practice, a lot of users run into <code>serde</code> (and associated <code>serde_json</code>) first. It's <em>really</em> nice:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize)]
+pub struct Thing {
+    pub n: i32,
+}
+
+fn main() -&gt; anyhow::Result&lt;()&gt; {
+    let things = vec![Thing { n: 1}, Thing { n: 2}];
+    let json = serde_json::to_string_pretty(&amp;things)?;
+    let things: Vec&lt;Thing&gt; = serde_json::from_str(&amp;json)?;
+    Ok(())
+}</code></pre></pre>
+<p>I'd also look at <code>anyhow</code> and <code>thiserror</code> to make the error handling a lot easier.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-do-i-choose-between-using-structs-enums-and-traits-when-modeling-data-and-behavior-in-rust"><a class="header" href="#how-do-i-choose-between-using-structs-enums-and-traits-when-modeling-data-and-behavior-in-rust">How do I choose between using structs, enums, and traits when modeling data and behavior in Rust?</a></h1>
+<p>So at the very high level...</p>
+<p>A <em>struct</em> is a collection of data that typically represents <em>something</em>:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Drink {
+    brand: String,
+    size: i32,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>An <em>enum</em> represents a possible set of things:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum DrinkType { Coffee, Soda, Water }
+<span class="boring">}</span></code></pre></pre>
+<p>Where enums get fun is that they can also carry data (like a tagged union from C, or a variant from C++):</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum DrinkType { 
+    Coffee { roast: CoffeeRoast },
+    Soda { brand: Brand },
+    Water
+}
+<span class="boring">}</span></code></pre></pre>
+<p>This really shines when you want to <em>only store things that are possible</em> - make impossible things unrepresentable.</p>
+<p>Either of these can use <code>impl</code> to define functions. Adding a <em>trait</em> applies an interface to them - so now you can represent the type as a trait, and know that certain methods are available without knowing the concrete type.</p>
+<p>So:</p>
+<ul>
+<li>Typically a <code>struct</code> is the right place if an entry is going to have all (or most) of the same fields.</li>
+<li>An <code>enum</code> is the right choice if you want to restrict to a valid type.</li>
+<li>A <code>trait</code> extends these to offer something. For example, the <code>Display</code> trait makes them all work with <code>format!</code> without having to write a <code>format</code> for all of them. You can also use traits for dynamic dispatch if you need single layer polymorphism.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-do-i-understand-and-use-pattern-matching-effectively-and-why-is-it-so-central-in-rust"><a class="header" href="#how-do-i-understand-and-use-pattern-matching-effectively-and-why-is-it-so-central-in-rust">How do I understand and use pattern matching effectively, and why is it so central in Rust?</a></h1>
+<p>Rust offers really rich algebraic data types. So you can wind up with something like:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum DrinkType { 
+    Coffee { roast: CoffeeRoast },
+    Soda { brand: Brand },
+    Water
+}
+
+pub fn get_drink_from_vending_machine(..) -&gt; Result&lt;Option&lt;DrinkType&gt;, VendingMachineError&gt;
+<span class="boring">}</span></code></pre></pre>
+<p>Without pattern matching, this would <em>hurt</em>. So <code>match</code> lets you easily extract the bits:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let d = get_drink_from_vending_machine();
+match d {
+    Ok(Some(DrinkType::Coffee { roast })) =&gt; println!("It's coffee ({})", roast),
+    Ok(None) =&gt; println!("There is no drink"),
+    Err(VendingMachineError::VendingMachineOnFire) =&gt; println!("Oh no"),
+    // etc.
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Matching is exhaustive, so if you add an enumeration entry - forgetting to handle it becomes a compilation error. That's <em>great</em> for refactors.</p>
+<p>You can also use the shorthands:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>if let Ok(Some(DrinkType::Coffee {roast})) = d {
+    // It's a coffee of roast type
+}
+let Ok(Some(DrinkType::Coffee {roast })) = d else {
+    panic!("They took away my coffee!");
+}
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="whats-the-simplest-way-to-understand-lifetimes-without-getting-stuck-on-the-syntax"><a class="header" href="#whats-the-simplest-way-to-understand-lifetimes-without-getting-stuck-on-the-syntax">What’s the simplest way to understand lifetimes without getting stuck on the syntax?</a></h1>
+<p>So <em>every</em> time you borrow something, there's a lifetime - it's just elided from your display. Long ago, you'd be writing Rust like this:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn inspect(thing: &amp;'thing_lifetime Thing)
+<span class="boring">}</span></code></pre></pre>
+<p>With the ugly <code>'lifetime_name</code> everywhere. The compiler keeps reducing the frequency with which you actually need to specify the lifetime!</p>
+<p>Let's take a function:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn compare(a: &amp;Thing, b: &amp;Thing) -&gt; &amp;Thing
+<span class="boring">}</span></code></pre></pre>
+<p>This won't compile, because Rust won't try and guess the lifetime soup. So you need to help it out. In this case, you want to compare <code>a</code> and <code>b</code> and return whichever reference meets the criteria. So it stands to reason that while the function is around, <code>a</code> and <code>b</code> must still exist - and the returned reference must still exist (in single-threaded code, that's going to be true). So you help Rust out:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn compare(a: &amp;'a Thing, b: &amp;'a Thing) -&gt; &amp;'a Thing
+<span class="boring">}</span></code></pre></pre>
+<p>We have just the one lifetime - because all the things share the lifetime.</p>
+<p>Likewise, if you had a struct that holds a reference:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct MyIndex&lt;'a&gt; {
+    target: &amp;'a Document
+}
+<span class="boring">}</span></code></pre></pre>
+<p>You <em>have</em> to specify a lifetime. What's the <code>'a</code> really doing?</p>
+<ul>
+<li>It's naming the lifetime <code>a</code> (you can use longer names!)</li>
+<li>It's saying that <em>for this structure to remain valid, the Document it points to must still exist</em>.</li>
+</ul>
+<p>Lifetimes are a little complicated. There's "lifetime extension", and cases in which the compiler is able to say "well, that reference is never used again so I can drop it here". In general: lifetimes are there to stop you using a reference after the thing it points to has stopped being there.</p>
+<blockquote>
+<p>And the glib answer: Rust programmers use references less frequently than C++ programmers. I sometimes find myself thinking "oh, it wants a lifetime specifier? Have I overcomplicated things?".</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="when-should-i-use-references-t-versus-smart-pointers-like-box-or-rc"><a class="header" href="#when-should-i-use-references-t-versus-smart-pointers-like-box-or-rc">When should I use references (&amp;T) versus smart pointers like Box or Rc?</a></h1>
+<p>This really boils down to ownership, and more importantly: how do you want this to be cleaned up?</p>
+<p>For a function that reads something, acts on it and doesn't do any sort of cleanup: Use a reference.</p>
+<p>If you're transferring ownership, the default move semantic or <code>Box</code> if it's on the heap is the right answer.</p>
+<p>If you don't really know who owns an object, and want it to go away whenever it is no longer in use by anyone: use <code>Rc</code> or <code>Arc</code>.</p>
+<p>And if you're in async, learn to love <code>Arc</code>!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-do-i-know-when-my-struct-should-be-copy-clone-or-neither"><a class="header" href="#how-do-i-know-when-my-struct-should-be-copy-clone-or-neither">How do I know when my struct should be Copy, Clone, or neither?</a></h1>
+<blockquote>
+<p>Confession: I have <code>#[derive(Clone)]</code> macroed.</p>
+</blockquote>
+<p>If a structure (or enum) implements <code>Clone</code>, you can use <code>.clone()</code> to make a deep copy. This can be slow, but it's also really useful. Sometimes, you want to copy things!</p>
+<blockquote>
+<p>For beginners: adding <code>clone()</code> everywhere until it works is a hallmark of learning Rust, not something to be ashamed of!</p>
+</blockquote>
+<p>Adding <code>Copy</code> is a trickier. Copy actually just denotes "if I move this object, it remains valid" - and you can only apply <code>Copy</code> if everything is copyable. So typically, add <code>Copy</code> if everything inside is a primitive (ints, etc.).</p>
+<p>As for neither? If something is really heavy to clone (big!), you probably want to avoid people cloning it if at all possible. So make that impossible. Or maybe it represents <em>just one of something</em> - that isn't logically cloneable.</p>
+<p>And gripe time - the clone wars have begun:</p>
+<p>Rust abuses the <code>clone</code> word. The correct way to increment a reference counter and get your very own shared pointer (<code>Arc</code> or <code>Rc</code>) to something is... <code>clone</code>. So the poor user gets no real indication if something is designed to be cloned (and clone is super cheap). Fortunately, there's work towards fixing this going on.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="why-does-rust-emphasize-immutability-by-default-and-when-is-mutability-the-right-choice"><a class="header" href="#why-does-rust-emphasize-immutability-by-default-and-when-is-mutability-the-right-choice">Why does Rust emphasize immutability by default, and when is mutability the right choice?</a></h1>
+<blockquote>
+<p>Bjarne Stroustrup of C++ fame pointed out that C++ and Rust are very similar, but with the defaults reversed.</p>
+</blockquote>
+<p>This really is a stylistic thing, and a hangover from the ML/O'Camel heritage. It does make it easier to read about code:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a = 1;
+<span class="boring">}</span></code></pre></pre>
+<p>You can now be sure that <code>a</code> won't be changed somewhere. It might be aliased, interior mutability can blow up your assumption - but for straightforward code it keeps you from slipping side-effects in by mistake that blow up your code.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-are-some-best-practices-for-organizing-rust-projects--modules-files-and-workspace-structure"><a class="header" href="#what-are-some-best-practices-for-organizing-rust-projects--modules-files-and-workspace-structure">What are some best practices for organizing Rust projects – modules, files, and workspace structure?</a></h1>
+<p>This is a HUGE question, so I'll only touch on it. I'm also very aware that any answer I give will upset <em>someone</em>! So I'm going to focus on how I like to do things!</p>
+<p>Put similar things together. Say you have a <code>Widget</code> repository (data storage of some type). Create a <code>widget</code> module. <code>mod.rs</code> (or <code>widget.rs</code>) is <em>just</em> the public interface with very little code in it. Inside the directory, I define the types and operations - and then offer a public API. That forces anyone using my widget module to use my accessor code; and now it doesn't matter how I've implemented it. I can even break it off into its own crate (replace <code>mod.rs</code> with <code>lib.rs</code>) later.</p>
+<p>This applies at the next level up, so you typically end up with a <code>data</code> or <code>repository</code> section - containing the various data repositories.</p>
+<p>If I have to then break that off into a separate service for some reason, I keep the API in <code>lib.rs</code> and move the logic to a <code>main.rs</code> (you can have both!) - and the <code>lib.rs</code> will handle calling the service. That keeps the cognitive load of breaking out into more and more services low.</p>
+<p>So, <em>traits</em>. This is where the pitchforks come out. I personally almost never say "oh, my widget repo needs an abstract trait and should be instantiated in case I decide to build a mock or change database completely" when I start. You <em>can</em> do that, but you're adding quite a bit of cognitive load and ceremony to your task. And for me, the task is usually: make the darned thing work!</p>
+<p>That's not to say you can't <em>later</em> insert a trait, basing the trait interface off of the functions you've discovered that you need - and use that to define a mock. I personally won't do that until I <em>actually want one</em>!</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-are-macros-in-rust-and-when-should-a-beginner-actually-use-them"><a class="header" href="#what-are-macros-in-rust-and-when-should-a-beginner-actually-use-them">What are macros in Rust, and when should a beginner actually use them?</a></h1>
+<p>It's actually really funny teaching Rust. <code>cargo new hello</code>, and voila:</p>
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
+    println!("Hello, World");
+}</code></pre></pre>
+<p>And right up-front, you're hitting the user with a macro and explaining "oh, this is a macro because <code>println</code> doesn't actually follow the syntax rules <em>of the language you're introducing</em>. It's unavoidable, but it's not my favourite start!</p>
+<p>Then you use <code>#[derive(Debug)]</code> and realize that <em>something</em> is writing code for you.</p>
+<p>Rust has two macros systems, and a third (Macros 2.0) is coming! I once saw a RustConf talk in which someone used macros to make XML into compilable Rust. I don't recommend it.</p>
+<p>I use the simplest macros when I'm doing something over, and over again. I use procedural macros for derivation. In both cases, I think about it - and try to document it.</p>
+<p>There have been times macros have saved my bacon. In Advanced Hands-on Rust, I use a macro to setup some of the "game phases" and the systems they run (and received a few grumbles about it!). The Bevy engine changed the underlying systems code several times while I wrote the book - just being able to adapt the macro was really handy.</p>
+<blockquote>
+<p>I don't recommend beginners start with macros. This isn't LISP!</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-do-cargo-features-work-and-when-should-beginners-start-using-them"><a class="header" href="#how-do-cargo-features-work-and-when-should-beginners-start-using-them">How do Cargo features work, and when should beginners start using them?</a></h1>
+<p>Learn to love:</p>
+<pre><code>cargo add serde -F derive
+</code></pre>
+<p>That's usually the first encounter with feature flags (often alongside "Why didn't deriving Serialize work?").</p>
+<p>Feature flags are defined in <code>Cargo.toml</code>, and can affect both the dependencies that are pulled in by a crate, and what functions and types are included. <code>derive</code> is a common one, because proc-macros wind up in a separate crate.</p>
+<p>For beginners, this can be daunting: what features do I <em>need</em>? You'll probably wind up typing <code>cargo add tokio -F full</code> because figuring them out is tricky!</p>
+<p>So my advice is that you shouldn't <em>add</em> feature flags to your crate until you really need them. The first time I used them, I needed to support multiple back-ends for a rendering system (OpenGL, wgpu, etc.).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-can-i-tell-whether-my-rust-code-is-idiomatic-and-what-resources-help-beginners-write-more-rusty-code"><a class="header" href="#how-can-i-tell-whether-my-rust-code-is-idiomatic-and-what-resources-help-beginners-write-more-rusty-code">How can I tell whether my Rust code is idiomatic, and what resources help beginners write more “Rusty” code?</a></h1>
+<p><a href="https://nostarch.com/rust-rustaceans">Rust for Rustaceans</a> does a pretty good job. I'd personally recommend the free <a href="https://doc.rust-lang.org/rust-by-example/">Rust By Example</a>.</p>
+<p>I'd also recommend posting your code somewhere public and someone is sure to correct you. Hopefully nicely!</p>
+<p>With that said:</p>
+<ul>
+<li>Prefer "it works" over "it's perfect". The goal is to actually get something done.</li>
+<li>If you like loops more than iterators: use loops!</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-tools-or-workflows-should-beginners-adopt-early-to-make-rust-development-smoother-formatting-linting-testing"><a class="header" href="#what-tools-or-workflows-should-beginners-adopt-early-to-make-rust-development-smoother-formatting-linting-testing">What tools or workflows should beginners adopt early to make Rust development smoother (formatting, linting, testing)?</a></h1>
+<p>You should:</p>
+<ul>
+<li>Format your code with <code>cargo fmt</code> (or have your IDE do it).</li>
+<li>Regularly run <code>cargo clippy</code> - Clippy will do a great job of teaching you idiomatic Rust.</li>
+<li>Get used to <code>cargo test</code> - and use an IDE that integrates it.</li>
+</ul>
+<blockquote>
+<p>If you're coming from C++, you should appreciate Cargo's ability to do everything in one tool!</p>
+</blockquote>
+<p>With that said: don't worry about being perfect up-front. Make programs, enjoy Rust. Nobody gets all of it the first time - and that's <em>entirely normal</em>.</p>
+<p>My daily driver is Rust Rover.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="editor.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
