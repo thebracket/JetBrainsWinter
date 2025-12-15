@@ -1,0 +1,15 @@
+[book]
+authors = ["Herbert Wolverson"]
+language = "en"
+src = "src"
+title = "Everything You Wanted to Ask About Rust"
+
+
+[output.html.playground]
+editable = true
+
+[rust]
+edition = "2024"
+
+[output.html]
+default-theme = "light"
